@@ -2,7 +2,7 @@
 ## Front matter
 lang: ru-RU
 title: Лабораторная работа №1
-subtitle: Введение в Mininet
+subtitle: Шифры простой замены
 author:
   -  Шуваев С. А.
 institute:
@@ -33,7 +33,7 @@ header-includes:
   * Шуваев Сергей Александрович
   * студент
   * Российский университет дружбы народов
-  * [103224269@pfur.ru](mailto:1032224269@pfur.ru)
+  * [1032262691@pfur.ru](mailto:1032262691@pfur.ru)
   * <https://Grinders060050.github.io/ru/>
 
 :::
@@ -46,75 +46,73 @@ header-includes:
 
 ## Цель работы
 
-Основной целью работы является развёртывание в системе виртуализации
-(например, в VirtualBox) mininet, знакомство с основными командами для работы с Mininet через командную строку и через графический интерфейс.
+**Цель:** изучить и реализовать шифры простой замены через графический интерфейс.
 
-## Выполнение лабораторной работы
+##  Шифр Цезаря
 
-![Импорт конфигураций](image/1.png){#fig:001 width=70%}
+```Julia
+function ceaser(word::String, k::Int)
+    result = IOBuffer()
+    for c in word
+        if 'a' <= c <= 'z'
+            shifted = (Int(c) - Int('a') + k)%26 + Int('a')
+            print(result, Char(shifted))
+        elseif 'A' <= c <= 'Z'
+            shifted = (Int(c) - Int('A') + k)%26 + Int('A')
+            print(result, Char(shifted))
+        else
+            print(result, c)
+        end
+    end
+    return String(take!(result))
+end
+```
 
-## Выполнение лабораторной работы
+##  Шифр Цезаря
 
-![Параметры импорта](image/2.png){#fig:002 width=70%}
+```Julia
+print("Enter key: ")
+k = parse(Int, readline())
+print("Enter word: ")
+word = readline()
+println(ceaser(word,k))
+```
 
-## Выполнение лабораторной работы
+##  Шифр Цезаря
 
-![Настройка сети](image/3.png){#fig:003 width=70%}
+![Результат работы шифра Цезаря](image/1.png){#fig:001 width=70%}
 
-## Выполнение лабораторной работы
+# Шифр Атбаш
 
-![Настройка сети](image/4.png){#fig:004 width=70%}
+```Julia
+function atbash(word::String)
+    return join(Char(
+            if 'a' <= c <= 'z'
+                (Int('z') - (Int(c) - Int('a'))) 
+            elseif 'A' <= c <= 'Z'
+                (Int('Z') - (Int(c) - Int('A')))
+            else
+                Int(c)
+            end
+    ) for c in word)
+end
+print("Enter your word: ")
+word = readline()
+println(atbash(word))
+```
 
-## Выполнение лабораторной работы
 
-![Запуск mininet](image/5.png){#fig:005 width=60%}
+# Шифр Атбаш
 
-## Выполнение лабораторной работы
+![Результат работы шифра Атбаш](image/2.png){#fig:002 width=70%}
 
-![Подключение к mininet через SSH](image/6.png){#fig:006 width=70%}
-
-## Выполнение лабораторной работы
-
-![Просмотр IP-адресов машины](image/7.png){#fig:007 width=40%}
-
-## Выполнение лабораторной работы
-
-![Файл /etc/netplan/01-netcfg.yaml](image/8.png){#fig:008 width=80%}
-
-## Выполнение лабораторной работы
-
-![Обновление Mininet](image/9.png){#fig:009 width=55%}
-
-## Выполнение лабораторной работы
-
-![Номер установленной версии mininet](image/10.png){#fig:010 width=70%}
-
-## Выполнение лабораторной работы
-
-![Настройка соединения X11 для суперпользователя](image/11.png){#fig:011 width=70%}
-
-## Выполнение лабораторной работы
-
-![Работа с Mininet с помощью командной строки](image/12.png){#fig:012 width=40%}
-
-## Выполнение лабораторной работы
-
-![Работа с Mininet с помощью командной строки](image/13.png){#fig:013 width=55%}
-
-## Выполнение лабораторной работы
-
-![Работа с Mininet с помощью командной строки](image/14.png){#fig:014 width=35%}
-
-## Выполнение лабораторной работы
-
-![Проверка связности хостов](image/15.png){#fig:015 width=70%}
 
 ## Выводы
 
-В результате выполнения данной лабораторной работы я развёрнул mininet в системе виртуализации
-VirtualBox, а также ознакомился с основными командами для работы с Mininet через командную строку и через графический интерфейс.
+В результате выполнения данной лабораторной работы были изучены и реализованы шифры простой замены (шифр Цезаря и шифр Атбаш).кий интерфейс.
 
 ## Список литературы
 
-1. Mininet [Электронный ресурс]. Mininet Project Contributors. URL: http://mini
-net.org/ (дата обращения: 11.12.2024).
+1. Julia1.11Documentation. url: https://docs.julialang.org/en/v1/ (дата обр. 11.10.2024)
+
+2. JuliaLang. url: https://julialang.org/ (дата обр. 11.10.2024)
